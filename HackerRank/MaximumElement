@@ -1,0 +1,84 @@
+//package HackerRank;
+
+import java.util.Scanner;
+import java.util.Stack;
+
+@SuppressWarnings("serial")
+class MyStack extends Stack<Long> {
+	private Long maximum;
+	
+	public MyStack() {
+		super();
+		maximum = 0L;
+		}
+	
+
+	
+	public Long getMaximum() {
+		return maximum;
+	}
+
+
+
+	@Override
+	public Long push(Long item) {
+		// TODO Auto-generated method stub
+		if(item.compareTo(maximum)>0)
+			maximum=item;
+		return super.push(item);
+	}
+
+
+	
+	@Override
+	public synchronized Long pop() {
+		// TODO Auto-generated method stub
+		Long poppedElement = super.pop();
+		if (maximum.equals(poppedElement)) {
+			findAnotherMaximum();
+		}
+		return poppedElement;
+	}
+
+
+
+	private void findAnotherMaximum() 
+	{
+		maximum=0L;
+		Long element;
+		for(int index=0;index<size();index++)
+		{
+			element=elementAt(index);
+			if(element.compareTo(maximum)>0)
+				maximum=element;
+		}
+	}
+}
+
+public class MaximumElement {
+
+	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+
+		MyStack stack = new MyStack();
+		int querry;
+		Long element;
+		int numberOfTask = in.nextInt();
+		for (int taskNumber = 0; taskNumber < numberOfTask; taskNumber++) {
+			querry = in.nextInt();
+			switch (querry) {
+			case 1:
+				element = in.nextLong();
+				stack.push(element);
+				break;
+			case 2:
+				stack.pop();
+				break;
+			case 3:
+				System.out.println(stack.getMaximum());
+				break;
+			}
+		}
+		in.close();
+	}
+}
