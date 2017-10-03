@@ -1,0 +1,69 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Scanner;
+
+public class ManasaAndStone
+	{
+		static List<Integer> lastStones;
+
+		public static void main(String[] args)
+			{
+				Scanner sc = new Scanner(System.in);
+				int testCases = sc.nextInt();
+				lastStones = new ArrayList<Integer>();
+				while (testCases > 0)
+					{
+						int numberOfStones = sc.nextInt();
+						int a = sc.nextInt();
+						int b = sc.nextInt();
+						getLastStones(0, a, b, numberOfStones);
+						sortAndDisplayLastStones();
+						testCases--;
+					}
+				sc.close();
+
+			}
+
+		private static void sortAndDisplayLastStones()
+			{
+
+				Collections.sort(lastStones);
+				int prev = -1;
+
+				Iterator<Integer> i = lastStones.iterator();
+				int stone;
+				while (i.hasNext())
+					{
+						stone = i.next();
+						if (stone != prev)
+							{
+								System.out.print(stone + " ");
+								prev = stone;
+							}
+						i.remove();
+					}
+
+				System.out.println();
+			}
+
+		private static void getLastStones(int currentStone, int a, int b, int numberOfStones)
+			{
+				/*
+				if (numberOfStones == 0)
+					lastStones.add(currentStone);
+				else
+					{
+						getLastStones(currentStone + a, a, b, numberOfStones - 1);
+						getLastStones(currentStone + b, a, b, numberOfStones - 1);
+					}
+				*/
+				for(int i=0;i<numberOfStones;i++)
+					{
+						lastStones.add(i*a+(numberOfStones-1-i)*b);
+						lastStones.add(i*b+(numberOfStones-1-i)*a);
+						
+					}
+			}
+	}
